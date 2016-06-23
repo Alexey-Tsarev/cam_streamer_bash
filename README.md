@@ -4,7 +4,7 @@ It tested, works on Raspberry Pi 2, 3.
 
 Gstreamer uses for video/audio capture and for streaming.
 Video encoding forced by Raspberry hardware acceleration - OpenMAX:
-https://jan.newmarch.name/LinuxSound/Diversions/RaspberryPiOpenMAX/
+https://jan.newmarch.name/LinuxSound/Sampled/OpenMAX/
 
 All Gstreamer's pipelines are in the files:
 cam*_streamer.sh
