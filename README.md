@@ -54,7 +54,7 @@ This is `top` command output on Raspberry Pi 2:
 ...
 ~~~
 
-In the below example there are 3 USB cameras with parameters:
+In the above example there are 3 USB cameras with the following parameters:
 ~~~
 1463 pid: 1280x720 h264 video + aac audio
 1450 pid:  640x480 h264 video + aac audio
