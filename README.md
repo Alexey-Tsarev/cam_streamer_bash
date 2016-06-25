@@ -60,7 +60,28 @@ In the above example there are 3 USB cameras with the following parameters:
 1450 pid:  640x480 h264 video + aac audio
 1498 pid:  640x480 h264 video, no audio
 ~~~
+
+Mostly the same for Raspberry Pi 3
+~~~
+$ grep Revision /proc/cpuinfo
+Revision        : a22082
+~~~
+
+~~~
+Tasks: 177 total,   1 running, 176 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 12.3 us,  0.8 sy,  0.0 ni, 84.5 id,  0.0 wa,  0.0 hi,  2.4 si,  0.0 st
+KiB Mem:    752872 total,   490548 used,   262324 free,    26772 buffers
+KiB Swap:  1023996 total,        0 used,  1023996 free.   323548 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 1660 pi        20   0  167892  27348  17668 S  40.3  3.6  22:57.02 gst-launch-1.0 v4l2src device=/dev/v4l/by-id/usb-Sonix_Technology_+
+ 1695 pi        20   0  126748  19724  14240 S   7.7  2.6   3:51.37 gst-launch-1.0 v4l2src device=/dev/v4l/by-id/usb-Etron_Technology_+
+ 1647 pi        20   0  163260  22284  15036 S   4.8  3.0   6:10.85 gst-launch-1.0 v4l2src device=/dev/v4l/by-id/usb-046d_09a4_C9469E2+
+ 1150 root      20   0  314780  39016   7500 S   3.8  5.2   2:07.54 /usr/bin/nimble -d --conf-dir=/etc/nimble --log-dir=/var/log/nimbl+
+~~~
+
+
 ---
 
 Author: Alexey Tsarev.  
-Email:  Tsarev.Alexey at gmail.com.
+Email:  Tsarev.Alexey at the gmail.com.
