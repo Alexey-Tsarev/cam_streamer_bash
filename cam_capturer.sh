@@ -22,7 +22,7 @@ log "Start"
 #
 # PID_EXISTS y | CAP_FILE_EXISTS n  # new date came
 #   new capturer
-#   wait, stop previous capturer <- another loops
+#   wait, stop previous capturer <- other loop
 #   move all, copy current
 #
 # PID_EXISTS y | CAP_FILE_EXISTS y  # usual case
@@ -32,12 +32,9 @@ log "Start"
 
 get_status() {
     if [ -n "$1" ]; then
-
-        local i=$1
-
         # PID_EXISTS
-        if [ -f "${CAP_PID[$i]}" ]; then
-            PID=`cat ${CAP_PID[$i]}`
+        if [ -f "${CAP_PID[$1]}" ]; then
+            PID=`cat ${CAP_PID[$1]}`
             ps -p ${PID} > /dev/null
             PID_EXISTS=$?
         else
@@ -47,7 +44,7 @@ get_status() {
 
         # CAP_FILE_EXISTS
         CAM_CAP_FILE=${CAP_DIR}/${CAP_FILE}
-        CAM_CAP_FILE=${CAM_CAP_FILE/CAM_NAME/${CAM_NAME[$i]}}
+        CAM_CAP_FILE=${CAM_CAP_FILE/CAM_NAME/${CAM_NAME[$1]}}
         CAM_CAP_FILE=${CAM_CAP_FILE/DT_FRMT/`date ${CAP_FILE_DT_FRMT}`}
         test -f "${CAM_CAP_FILE}"
         CAP_FILE_EXISTS=$?
@@ -55,6 +52,8 @@ get_status() {
     fi
 }
 
+
+declare -A CAM_PID_TO_STOP
 
 for i in "${!CAM_NAME[@]}"
 do
@@ -88,40 +87,26 @@ do
             rm "$CAM_CAP_FILE"
             exit 1
         fi
+
+        if [ "$PID_EXISTS" -eq "0" ] && [ "$CAP_FILE_EXISTS" -ne "0" ]; then
+            CAM_PID_TO_STOP[${CAM_NAME[$i]}]=${PID}
+        fi
     fi
     # end
 done
 
 
-# (case) is a delay necessary?
-DELAY=false
-
-for i in "${!CAM_NAME[@]}"
-do
-    get_status ${i}
-
-    if [ "$PID_EXISTS" -eq "0" ] && [ "$CAP_FILE_EXISTS" -ne "0" ]; then
-        log "Make delay before stop previous capturer"
+# wait, stop previous capturer
+    if [ "${#CAM_PID_TO_STOP[@]}" -ge "1" ]; then
+        log "Make delay $CAP_WAIT before stop previous capturer"
         sleep ${CAP_WAIT}
-        DELAY=true
-        break;
+
+        for i in "${!CAM_PID_TO_STOP[@]}"
+        do
+            log "Previous capturer for the $i is still running. PID: '${CAM_PID_TO_STOP[$i]}'. Stopping..."
+            killer ${CAM_PID_TO_STOP[$i]}
+        done
     fi
-done
-# end
-
-
-# (case) stop previous capturer
-if [ "$DELAY" == true ]; then
-    for i in "${!CAM_NAME[@]}"
-    do
-        get_status ${i}
-
-        if [ "$PID_EXISTS" -eq "0" ] && [ "$CAP_FILE_EXISTS" -ne "0" ]; then
-            log "Previous capturer is still running. PID: '$PID'. Stopping"
-            killer ${PID}
-        fi
-    done
-fi
 # end
 
 
