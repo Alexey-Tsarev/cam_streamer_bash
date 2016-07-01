@@ -82,10 +82,10 @@ do
         log "Captured file size: $CAP_FILE_SIZE"
 
         if [ "$CAP_FILE_SIZE" -lt "1000" ]; then
-            log "${CAM_NAME[$i]} issue. Remove file and exit 1"
+            log "${CAM_NAME[$i]} issue. Remove file and continue"
             killer ${PID}
             rm "$CAM_CAP_FILE"
-            exit 1
+            # exit 1
         fi
 
         if [ "$PID_EXISTS" -eq "0" ] && [ "$CAP_FILE_EXISTS" -ne "0" ]; then
