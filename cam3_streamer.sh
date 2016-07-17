@@ -36,4 +36,5 @@ while true; do
     # set +x
 
     log "$NAME streamer exited with the code=$?"
+    sleep 5s
 done
