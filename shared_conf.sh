@@ -14,7 +14,7 @@ LOG_LINE_DT_FRMT="+%Y-%m-%d %H:%M:%S"
 CAM_NAME=(
 cam1
 cam2
-cam3
+# cam3
 )
 
 CAM_CMD=(
@@ -78,7 +78,7 @@ REMOTE_USER="example-user"
 REMOTE_HOST="example-host"
 REMOTE_DIR="/storage/cam/CAM_NAME"
 TMP_FILE_EXT="tmp"
-COPY_CMD="sudo rsync -av --progress --bwlimit=10240K SRC_FILE $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT"
+COPY_CMD="sudo rsync -av --progress --timeout=600 --bwlimit=10240K SRC_FILE $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT"
 FFMPEG_CMD="sudo ssh $REMOTE_USER@$REMOTE_HOST /usr/local/sbin/ffmpeg -y -analyzeduration 1000000000000 -i $REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT -vcodec copy -acodec copy -f matroska -flags +global_header $REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT.$TMP_FILE_EXT"
 MOVE_CMD="sudo ssh $REMOTE_USER@$REMOTE_HOST mv $REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT.$TMP_FILE_EXT $REMOTE_DIR/SRC_FILE_NAME.mkv"
 RM_CMD="rm SRC_FILE; sudo ssh $REMOTE_USER@$REMOTE_HOST rm $REMOTE_DIR/SRC_FILE_NAME.$TMP_FILE_EXT"
