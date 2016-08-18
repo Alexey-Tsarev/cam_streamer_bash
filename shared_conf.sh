@@ -7,7 +7,7 @@ LOG_ECHO=true
 LOG_WRITE=true
 LOG_FILE=DT_FRMT.log
 LOG_FILE_DT_FRMT=+%Y-%m-%d
-LOG_LINE_DT_FRMT="+%Y-%m-%d %H:%M:%S"
+LOG_LINE_DT_FRMT="+%Y-%m-%d %H:%M:%S,%3N %Z"
 # end
 
 # CAM / CAP arrays
