@@ -2,8 +2,13 @@
 
 # shared
 LOG_DIR=log
-LOG_ECHO=true
-# LOG_ECHO=false
+
+if [ -n "`env | grep TERM=`" ]; then
+    LOG_ECHO=true
+else
+    LOG_ECHO=false
+fi
+
 LOG_WRITE=true
 LOG_FILE=DT_FRMT.log
 LOG_FILE_DT_FRMT=+%Y-%m-%d
